@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Colegio.API
@@ -8,19 +8,23 @@ namespace Colegio.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Configuración de la conexión a la base de datos
             builder.Services.AddDbContext<ColegioDbContext>(options =>
-                options.UseNpgsql(builder.Configuration.GetConnectionString("ColegioDbContext") ?? throw new InvalidOperationException("Connection string 'ColegioDbContext' not found.")));
+                options.UseNpgsql(builder.Configuration.GetConnectionString("ColegioDbContext") 
+                ?? throw new InvalidOperationException("Connection string 'ColegioDbContext' not found.")));
 
-            // Add services to the container.
-
+            // Añadir servicios al contenedor
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            // Configuración para que la aplicación escuche en todas las direcciones (0.0.0.0) y el puerto 80
+            app.Urls.Add("http://0.0.0.0:80");
+
+            // Configuración de middleware
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -28,10 +32,7 @@ namespace Colegio.API
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
-
             app.MapControllers();
 
             app.Run();
