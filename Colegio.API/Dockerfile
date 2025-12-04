@@ -8,7 +8,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Colegio.API/Colegio.API.csproj", "Colegio.API/"]
-COPY ["Colegio.Modelos/Colegio.Modelos.csproj", "Colegio.Modelos/"]
+COPY ["Colegio/Colegio.Modelos.csproj", "Colegio.Modelos/"]
 RUN dotnet restore "./Colegio.API/Colegio.API.csproj"
 COPY . .
 WORKDIR "/src/Colegio.API"
