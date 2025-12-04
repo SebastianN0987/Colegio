@@ -11,7 +11,7 @@ namespace Colegio.API
 
             // Configuración de la conexión a la base de datos
             builder.Services.AddDbContext<ColegioDbContext>(options =>
-                options.UseNpgsql(builder.Configuration.GetConnectionString("ColegioDbContext") 
+                options.UseNpgsql(builder.Configuration.GetConnectionString("ColegioDbContext")
                 ?? throw new InvalidOperationException("Connection string 'ColegioDbContext' not found.")));
 
             // Añadir servicios al contenedor
@@ -21,8 +21,6 @@ namespace Colegio.API
 
             var app = builder.Build();
 
-            // Configuración para que la aplicación escuche en todas las direcciones (0.0.0.0) y el puerto 80
-            app.Urls.Add("http://0.0.0.0:80");
 
             // Configuración de middleware
             if (app.Environment.IsDevelopment())
